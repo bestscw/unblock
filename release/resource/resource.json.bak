@@ -1,0 +1,34 @@
+{
+"resources":
+	[
+		{"name":"assets","type":"sheet","url":"assets/assets.json"},
+		{"name":"coordinate","type":"json","url":"coordinate.json"},
+		{"name":"5y-gamebg","type":"image","url":"assets/5y-gamebg.png"},
+		{"name":"5y-gamebg-hd","type":"image","url":"assets/5y-gamebg-hd.png"},
+		{"name":"back","type":"image","url":"assets/back.png"},
+		{"name":"gamebg","type":"image","url":"assets/gamebg.png"},
+		{"name":"gamebg-hd","type":"image","url":"assets/gamebg-hd.png"},
+		{"name":"love-gamebg","type":"image","url":"assets/love-gamebg.png"},
+		{"name":"love-gamebg-hd","type":"image","url":"assets/love-gamebg-hd.png"},
+		{"name":"r","type":"image","url":"assets/r.png"},
+		{"name":"wood_1","type":"image","url":"assets/wood_1.png"},
+		{"name":"wood_2","type":"image","url":"assets/wood_2.png"},
+		{"name":"wood_3","type":"image","url":"assets/wood_3.png"},
+		{"name":"wood_4","type":"image","url":"assets/wood_4.png"},
+		{"name":"wood_5","type":"image","url":"assets/wood_5.png"},
+		{"name":"wood_6","type":"image","url":"assets/wood_6.png"},
+		{"name":"wood_7","type":"image","url":"assets/wood_7.png"},
+		{"name":"wood_8","type":"image","url":"assets/wood_1.png"},
+		{"name":"wood_9","type":"image","url":"assets/wood_2.png"},
+		{"name":"wood_10","type":"image","url":"assets/wood_10.png"},
+		{"name":"wood_11","type":"image","url":"assets/wood_11.png"},
+		{"name":"wood_12","type":"image","url":"assets/wood_12.png"},
+		{"name":"wood_13","type":"image","url":"assets/wood_13.png"},
+		{"name":"wood_14","type":"image","url":"assets/wood_14.png"},
+	],
+
+"groups":
+	[
+        {"name":"preload","keys":"assets,coordinate,5y-gamebg,5y-gamebg-hd,back,gamebg,gamebg-hd,love-gamebg,love-gamebg-hd,r"}
+	]
+}

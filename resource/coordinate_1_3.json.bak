@@ -1,0 +1,11 @@
+[
+	{"_direction":1,"_titleX":0,"_titleY":0,"_style":3,"_width":80,"_height":160},
+	{"_direction":0,"_titleX":80,"_titleY":0,"_style":1,"_width":160,"_height":80},
+	{"_direction":0,"_titleX":240,"_titleY":0,"_style":1,"_width":160,"_height":80},
+
+	{"_direction":0,"_titleX":0,"_titleY":160,"_style":1,"_width":160,"_height":80},
+	{"_direction":1,"_titleX":160,"_titleY":80,"_style":3,"_width":80,"_height":160},
+	{"_direction":1,"_titleX":240,"_titleY":160,"_style":4,"_width":80,"_height":240},
+	{"_direction":1,"_titleX":320,"_titleY":160,"_style":4,"_width":80,"_height":240},
+	{"_direction":0,"_titleX":0,"_titleY":320,"_style":2,"_width":240,"_height":80}
+]
