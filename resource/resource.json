@@ -25,7 +25,7 @@
         {"name":"shareTips","type":"image","url":"assets/shareTips.png"},
         {"name":"btnPlay","type":"image","url":"assets/play.png"},
         {"name":"click","type":"sound","url":"assets/click.mp3"},
-		{"name":"snowjson","type":"sheet","url":"assets/snow.json"},
+		{"name":"snow_json","type":"json","url":"assets/snow.json"},
 		{"name":"snow","type":"image","url":"assets/snow.png"}
 
 
@@ -34,6 +34,6 @@
 
 "groups":
 	[
-        {"name":"preload","keys":"assets,coordinate_1_1,coordinate_1_2,coordinate_1_3,coordinate_1_4,coordinate_1_5,5y-gamebg,5y-gamebg-hd,back,gamebg,gamebg-hd,love-gamebg,love-gamebg-hd,r,wood_0,wood_1,wood_2,wood_3,wood_4,bg,shareTips,btnPlay,click,snow,snowjson"}
+        {"name":"preload","keys":"assets,coordinate_1_1,coordinate_1_2,coordinate_1_3,coordinate_1_4,coordinate_1_5,5y-gamebg,5y-gamebg-hd,back,gamebg,gamebg-hd,love-gamebg,love-gamebg-hd,r,wood_0,wood_1,wood_2,wood_3,wood_4,bg,shareTips,btnPlay,click,snow,snow_json"}
 	]
 }

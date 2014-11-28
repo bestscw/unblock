@@ -2,8 +2,14 @@
 "resources":
 	[
 		{"name":"assets","type":"sheet","url":"assets/assets.json"},
-		{"name":"coordinate","type":"json","url":"coordinate.json"},
-		{"name":"5y-gamebg","type":"image","url":"assets/5y-gamebg.png"},
+		{"name":"coordinate_1_1","type":"json","url":"coordinate_1_1.json"},
+        {"name":"coordinate_1_2","type":"json","url":"coordinate_1_2.json"},
+        {"name":"coordinate_1_3","type":"json","url":"coordinate_1_3.json"},
+        {"name":"coordinate_1_4","type":"json","url":"coordinate_1_4.json"},
+        {"name":"coordinate_1_5","type":"json","url":"coordinate_1_5.json"},
+
+        {"name":"bg","type":"image","url":"assets/bg.png"},
+        {"name":"5y-gamebg","type":"image","url":"assets/5y-gamebg.png"},
 		{"name":"5y-gamebg-hd","type":"image","url":"assets/5y-gamebg-hd.png"},
 		{"name":"back","type":"image","url":"assets/back.png"},
 		{"name":"gamebg","type":"image","url":"assets/gamebg.png"},
@@ -11,24 +17,23 @@
 		{"name":"love-gamebg","type":"image","url":"assets/love-gamebg.png"},
 		{"name":"love-gamebg-hd","type":"image","url":"assets/love-gamebg-hd.png"},
 		{"name":"r","type":"image","url":"assets/r.png"},
-		{"name":"wood_1","type":"image","url":"assets/wood_1.png"},
+        {"name":"wood_0","type":"image","url":"assets/wood_0.png"},
+        {"name":"wood_1","type":"image","url":"assets/wood_1.png"},
 		{"name":"wood_2","type":"image","url":"assets/wood_2.png"},
 		{"name":"wood_3","type":"image","url":"assets/wood_3.png"},
 		{"name":"wood_4","type":"image","url":"assets/wood_4.png"},
-		{"name":"wood_5","type":"image","url":"assets/wood_5.png"},
-		{"name":"wood_6","type":"image","url":"assets/wood_6.png"},
-		{"name":"wood_7","type":"image","url":"assets/wood_7.png"},
-		{"name":"wood_8","type":"image","url":"assets/wood_1.png"},
-		{"name":"wood_9","type":"image","url":"assets/wood_2.png"},
-		{"name":"wood_10","type":"image","url":"assets/wood_10.png"},
-		{"name":"wood_11","type":"image","url":"assets/wood_11.png"},
-		{"name":"wood_12","type":"image","url":"assets/wood_12.png"},
-		{"name":"wood_13","type":"image","url":"assets/wood_13.png"},
-		{"name":"wood_14","type":"image","url":"assets/wood_14.png"},
-	],
+        {"name":"shareTips","type":"image","url":"assets/shareTips.png"},
+        {"name":"btnPlay","type":"image","url":"assets/play.png"},
+        {"name":"click","type":"sound","url":"assets/click.mp3"},
+			{"name":"snowjson","type":"sheet","url":"assets/snow.json"},
+		{"name":"snow","type":"image","url":"assets/snow.png"},
+
+
+
+    ],
 
 "groups":
 	[
-        {"name":"preload","keys":"assets,coordinate,5y-gamebg,5y-gamebg-hd,back,gamebg,gamebg-hd,love-gamebg,love-gamebg-hd,r"}
+        {"name":"preload","keys":"assets,coordinate_1_1,coordinate_1_2,coordinate_1_3,coordinate_1_4,coordinate_1_5,5y-gamebg,5y-gamebg-hd,back,gamebg,gamebg-hd,love-gamebg,love-gamebg-hd,r,wood_0,wood_1,wood_2,wood_3,wood_4,bg,shareTips,btnPlay,click"}
 	]
 }

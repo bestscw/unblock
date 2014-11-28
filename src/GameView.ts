@@ -531,16 +531,26 @@ class GameView extends egret.EventDispatcher
         }
     }
 
-
     //显示游戏进入画面
     public showGameBeginLayout()
     {
         this._gameOverLayoutParent.addChild( this._gameBeginLayout );
 
-        //var texture = RES.getRes("snow");
-        //var config = RES.getRes("snowjson");
-        //DataManage.particle = new particle.GravityParticleSystem(texture, config);
-        //DataManage.particle.start();
+        //获取纹理
+        var texture:egret.Texture = RES.getRes("snow");
+        //获取配置
+        var config = RES.getRes("snow_json");
+
+        //不要重創建的判斷
+        if (DataManage.particle)
+        {
+            DataManage.particle.stop();
+            this._gameBeginLayout.removeChild(DataManage.particle);
+        }
+
+        DataManage.particle = new particle.GravityParticleSystem(texture, config);//创建 GravityParticleSystem
+        this._gameBeginLayout.addChild(DataManage.particle);//粒子庫加載到畫面
+        DataManage.particle.start();//啟動粒子庫
     }
 
     private onRestart()
@@ -558,8 +568,11 @@ class GameView extends egret.EventDispatcher
     {
         if(this._gameBeginLayout.parent)
         {
+            DataManage.particle.stop();
             this._gameBeginLayout.parent.removeChild(this._gameBeginLayout);
         }
+
+
 
         var evt2:egret.Event = new egret.Event("gamePlay");
         this.dispatchEvent(evt2);

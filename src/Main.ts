@@ -124,6 +124,14 @@ class Main extends egret.DisplayObjectContainer{
     //开始游戏
     private onGamePlay()
     {
+	    console.log('GamePlay');
+        //不要重創建的判斷
+        if (DataManage.particle)
+        {
+            DataManage.particle.stop();
+        }
+        this.gameLayout.addChild(DataManage.particle);
+        DataManage.particle.start();
     }
 
     //重新开始游戏

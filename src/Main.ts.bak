@@ -78,7 +78,10 @@ class Main extends egret.DisplayObjectContainer{
         }
     }
 
-    private hero:Hero;
+
+    private gameView:GameView;      //游戏视图
+    private gameLayout:egret.Sprite; //游戏层
+
 
     /**
      * 创建游戏场景
@@ -87,361 +90,57 @@ class Main extends egret.DisplayObjectContainer{
         egret.Profiler.getInstance().run();
         egret.Ticker.getInstance().register(this.onEnterFrame, this);
 
+        DataManage.stageW = egret.MainContext.instance.stage.stageWidth;
+        DataManage.stageH = egret.MainContext.instance.stage.stageHeight;
 
-        this.initWood();
-        /**
-        var bg:egret.Bitmap = new egret.Bitmap(RES.getRes("bg"));
-        bg.width = CONST.stageWidth;
-        bg.height = CONST.stageHeight;
-        this.addChild(bg);
+        DataManage.w = DataManage.stageW*DataManage.ratio;
+        DataManage.h = DataManage.stageW*DataManage.ratio;
+        DataManage.min_width = DataManage.w/6;
+        DataManage.min_height = DataManage.h/6;
 
-        this.hero = <Hero>ObjectPool.getInstance().createObject(Hero);
-        this.addChild(this.hero.view);
-         **/
+        //创建游戏层
+        this.gameLayout = new egret.Sprite();
+        this.gameLayout.y = 0;
+        this.gameLayout.x = 0;
 
-        /**
-        this.stage.touchChildren = false;
-        this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
-        this.stage.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
-        this.stage.addEventListener(egret.Event.LEAVE_STAGE, this.onTouchEnd, this);
-        this.stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
-         **/
+        this.gameLayout.width = DataManage.w;
+        this.gameLayout.height = DataManage.h;
+
+        DataManage.clickSound = RES.getRes("click");
+
+        //创建游戏静态界面
+        this.gameView = new GameView();
+        this.gameView.createStaticView(this);
+        this.gameView.addEventListener("gameRestart", this.onRestart, this);
+        this.gameView.addEventListener("gamePlay", this.onGamePlay, this);
+
+        this.gameView.createGameLayer(this.gameLayout);
+
+        this.addChild(this.gameLayout);
+        this.gameView.showGameBeginLayout();
     }
 
-    private initWood()
+
+    //开始游戏
+    private onGamePlay()
     {
-        var info:any = RES.getRes('coordinate');
-
-        for (var i = 0; i < info.length; i++) {
-            var style:number = info[i]._style;
-            var x:number = info[i]._titleX;
-            var y:number = info[i]._titleY;
-            var direcion:number = info[i]._direction;
-            var width:number = info[i]._width;
-            var height:number = info[i]._height;
-
-            var wood:Wood = <Wood>ObjectPool.getInstance().createObject(Wood);
-            wood.style = style;
-            wood._width = width;
-            wood._height = height;
-            wood.view.x = x;
-            wood.view.y = y;
-            wood.direction = direcion;
-            wood.view.name = wood.style+"_"+wood.direction+"_"+width+"_"+height;
-            wood.view.width = width;
-            wood.view.height = height;
-            wood.setView();
-
-            console.log('direction:'+direcion+",x:"+x+",y:"+y+",width:"+width+",height:"+height);
-
-            wood.view.touchEnabled = true;
-            wood.view.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTouchTap, this);
-            wood.view.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this,false,1);
-            wood.view.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
-            wood.view.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
-            this.addChild(wood.view);
-        }
     }
 
-    private _isTouching:boolean;
-
-    private onTouchTap(event:egret.TouchEvent):void {
-
-        this._isTouching = true;
-        console.log("touchap:"+event.target.x);
-    }
-
-    private onTouchBegin(event:egret.TouchEvent):void {
-
-        this._isTouching = true;
-        this._preMoveX = event.stageX;
-        this._preMoveY = event.stageY;
-
-        console.log(event.stageX+"______"+event.stageY+",x"+event.target.name);
-    }
-
-    private onTouchEnd(event:egret.TouchEvent):void {
-        this._isTouching = false;
-    }
-
-    private _preMoveX:number = 0;
-    private _preMoveY:number = 0;
-    private onTouchMove(event:egret.TouchEvent):void {
-        if(this._isTouching) {
-
-            console.log('move...');
-            event.target.x
-            var x1:number = event.target.x;
-
-            console.log('touch x:'+x1);
-            var x2:number = event.target.x+event.target.width;
-
-            var y1:number = event.target.y;
-            var y2:number = event.target.y+event.target.height;
-
-
-
-            console.log(event.target.name);
-            var name:string = event.target.name;
-            var str:string[] =  name.split('_');
-            var style:number = parseInt(str[0]);
-            var direction:number = parseInt(str[1]);
-
-            // 水平移动
-            if(direction == 0)
-            {
-                var move:number = event.stageX - this._preMoveX;
-
-                if(move > 0)
-                {
-                    // 向右移动
-                    var number:number = this.moveRight(x1,x2,y1,y2);
-                    console.log('move right,number:'+number)
-                    if(number > 0)
-                    {
-                        event.target.x += number;
-                        event.target.y += 0;
-                        console.log('xxxxxxxxx:'+event.target.x);
-
-
-
-                        // event.target.moveXY(number, 0);
-                    }
-                }
-                else
-                {
-                    // 向左移动
-                    var number:number = this.moveLeft(x1,x2,y1,y2);
-                    console.log('move left,number:'+number)
-
-                    if(number < 0)
-                    {
-                        event.target.x += number;
-                        event.target.y += 0;
-                        //event.target.moveXY(number, 0);
-                    }
-                }
-
-            }
-            else if(direction == 1)
-            {
-
-                // 垂直移动
-                var move:number = event.stageY - this._preMoveY;
-
-                // 向上移动
-                if(move < 0)
-                {
-                    var number:number = this.moveTop(x1,x2,y1,y2);
-                    console.log('move top,number:'+number)
-
-                    if(number < 0)
-                    {
-                        event.target.x += 0;
-                        event.target.y += number;
-                        //event.target.moveXY(0, number);
-                    }
-
-                } // 向下移动
-                else
-                {
-                    var number:number = this.moveBottom(x1,x2,y1,y2);
-                    console.log('move bottom,number:'+number)
-
-                    if(number > 0)
-                    {
-                        event.target.x += 0;
-                        event.target.y += number;
-                        //event.target.moveXY(0, number);
-                    }
-
-                }
-            }
-        }
-        this._preMoveX = event.stageX;
-        this._preMoveY = event.stageY;
-    }
-
-    private moveLeft(x1,x2,y1,y2)
+    //重新开始游戏
+    private onRestart()
     {
-        var max:number = 0;
-        var woods:Array<any> = [];
-        woods = ObjectPool.getInstance().getObjectsByKey(Wood.key);
-
-        for (var i = 0; i < woods.length; i++) {
-            var _x1 = woods[i].view.x + woods[i].view.width;
-            var _y1 = woods[i].view.y;
-            var _y2 = _y1+ woods[i].view.height;
-
-            if(x1 == _x1 && y1 == _y1) continue;
-
-
-            if(y1 >= _y1 && y2 <= _y2)
-            {
-                if(_x1 < x1)
-                {
-                    if(_x1 > max)
-                    {
-                        max = _x1;
-                    }
-                }
-            }
-        }
-
-        if(max >= 0)
-        {
-            if(max - x1 < 0)
-            {
-                return max - x1;
-            }
-        }
-
-        return 0;
-    }
-
-    private moveRight(x1,x2,y1,y2)
-    {
-        console.log('move right');
-        var woods:Array<any> = [];
-        var max:number = this.stage.stageWidth;
-        woods = ObjectPool.getInstance().getObjectsByKey(Wood.key);
-
-        for (var i = 0; i < woods.length; i++) {
-            var _x1 = woods[i].view.x;
-            var _y1 = woods[i].view.y;
-            var _y2 = _y1+ woods[i].view.height;
-
-            if(x1 == _x1 && y1 == _y1) continue;
-
-            if(y1 >= _y1 && y2 <= _y2)
-            {
-                if(_x1 > x2)
-                {
-                    if(_x1 < max)
-                    {
-                        max = _x1;
-                    }
-                }
-            }
-        }
-
-        console.log("max:"+max+",x1"+x1);
-
-        if(max-x2 >= 0)
-        {
-
-            return max-x2;
-            var offset:number = max-x1;
-            var end:number = x2+offset;
-            if(end <= this.stage.stageWidth)
-            {
-                return max-x1;
-            }
-            else
-            {
-                return 0;
-            }
-            //event.target.moveXY(max-x1, 0);
-        }
-        /**
-        if(max != 10000)
-        {
-            if(max-x1 > 0)
-            {
-
-                return max-x1;
-                //event.target.moveXY(max-x1, 0);
-            }
-        }
-
-         **/
-
-        return 0;
-    }
-
-    private moveTop(x1,x2,y1,y2)
-    {
-        var woods:Array<any> = [];
-        var max:number = 0;
-        woods = ObjectPool.getInstance().getObjectsByKey(Wood.key);
-
-        for (var i = 0; i < woods.length; i++) {
-            var _x1 = woods[i].view.x;
-            var _x2 = woods[i].view.x + woods[i].view.width;
-            var _y1 = woods[i].view.y;
-            var _y2 = _y1+ woods[i].view.height;
-
-            if(x1 == _x1 && y1 == _y1) continue;
-
-            if(x1 >= _x1 && x2 <= _x2)
-            {
-                if(_y2 < y1)
-                {
-                    console.log('_x1:'+_x1+",_x2:"+_x2+",_y1:"+_y1);
-                    if(_y2 > max)
-                    {
-                        max = _y2;
-                    }
-                }
-            }
-        }
-
-        console.log('movetop:max:'+max+",y1:"+y1);
-
-        if(max >= 0)
-        {
-            if(max-y1 < 0)
-            {
-                return max - y1;
-            }
-        }
-
-        return 0;
-    }
-
-    private moveBottom(x1,x2,y1,y2)
-    {
-        var max:number = this.stage.stageHeight;
-        var woods:Array<any> = [];
-        woods = ObjectPool.getInstance().getObjectsByKey(Wood.key);
-
-        for (var i = 0; i < woods.length; i++) {
-            var _x1 = woods[i].view.x;
-            var _x2 = woods[i].view.x + woods[i].view.width;
-            var _y1 = woods[i].view.y;
-            var _y2 = _y1+ woods[i].view.height;
-
-            if(x1 == _x1 && y1 == _y1) continue;
-
-            if(x1 >= _x1 && x2 <= _x2)
-            {
-                if(_y1 > y2)
-                {
-                    if(_y1 < max)
-                    {
-                        max = _y1;
-                    }
-                }
-            }
-        }
-
-        console.log('movebottom222222:max:'+max+",y1:"+y1);
-
-        if(max - y2 > 0)
-        {
-            return max-y2;
-        }
-
-
-        return 0;
+        DataManage.move_step = 0;
+        this.gameView.updateScrore();
+        this.gameLayout.removeChildren();
+        this.gameView.createGameLayer(this.gameLayout);
     }
 
     private _time:number = 0;
     public onEnterFrame(advancedTime:number):void {
         /**
-        this._time += advancedTime;
-        //创建敌人
-        if(this._time > CONST.enemyGap){
+         this._time += advancedTime;
+         //创建敌人
+         if(this._time > CONST.enemyGap){
             this._time = 0;
             var enemy = ObjectPool.getInstance().createObject(Enemy);
             enemy.view.x = Math.random() * (CONST.stageWidth - 80);
